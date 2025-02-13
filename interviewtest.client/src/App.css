@@ -1,0 +1,75 @@
+body{
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+
+.loading{
+    cursor:wait
+}
+
+.row{
+    display:flex;
+    flex-direction: row;
+}
+
+.column{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-of-value{
+    width:50%;
+    height:3em;
+    font-size: 16px;
+}
+
+.employee-container, form{
+    transition:background-color 0.2s linear;
+    &:hover{
+        background-color: #3898ec;
+    }
+}
+
+span, .text-input{
+    display:flex;
+    align-items: center;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    width:50ch;
+    height:2em;
+    padding:5px;
+    border: 1px black dotted;
+}
+
+.maths-container{
+    padding:10px;
+    width:calc(100ch + 2px);
+    border:1px black solid;
+}
+
+body{
+    margin:0px;
+}
+
+.app-container{
+    width:fit-content;
+    background-color: #a8d2f7;
+    padding:10px;
+    border-radius:4px;
+}
+
+.container-div{
+    justify-items: center;
+    background-image: linear-gradient(135deg, #091e33 39%, #3898ec99);
+    padding:10px;
+}
+
+input.button, .employee-button {
+    width:60px;
+    &:hover{
+        background-color: white;
+        cursor:pointer;
+    }
+}
