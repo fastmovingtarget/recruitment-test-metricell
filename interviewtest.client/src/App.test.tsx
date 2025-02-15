@@ -11,7 +11,7 @@ const fetchMock = vi.fn((urlString, otherArgs) => {
         return Promise.resolve({
             json: () => Promise.resolve( [{name:"Test Name", value:100}] ),
         })
-    if(urlString === 'api/employees/mathstuff' && (!otherArgs?.method || otherArgs?.method === "GET"))
+    if(urlString === 'api/list' && (!otherArgs?.method || otherArgs?.method === "GET"))
         return Promise.resolve({
             json: () => Promise.resolve( 100 ),
         })
@@ -27,7 +27,7 @@ const fetchMock = vi.fn((urlString, otherArgs) => {
         return Promise.resolve({
             status: 204
         })
-    if(urlString.includes('api/employees') && (otherArgs?.method === "PATCH"))
+    if(urlString.includes('api/list') && (otherArgs?.method === "PATCH"))
         return Promise.resolve({
             status: 204
         })
@@ -93,7 +93,7 @@ describe("Basic components rendered correctly", () => {
                 return Promise.resolve({
                     json: () => Promise.resolve( [{name:"Test Name", value:100}] ),
                 })
-            if(urlString === 'api/employees/mathstuff')
+            if(urlString === 'api/list')
                 return Promise.resolve({
                     json: () => Promise.resolve( 10000000 ),
                 })
@@ -113,7 +113,7 @@ describe("Basic components rendered correctly", () => {
                 return Promise.resolve({
                     json: () => Promise.resolve( [{name:"Test Name", value:100}] ),
                 })
-            if(urlString === 'api/employees/mathstuff')
+            if(urlString === 'api/list')
                 return Promise.resolve({
                     json: () => Promise.resolve( 11171 ),
                 })
@@ -141,7 +141,7 @@ describe("API editing calls made correctly", () => {
         await user.click(deleteElement)
 
         expect(fetchMock).toHaveBeenCalledTimes(5);//2 initially on load, one to send the delete, two subsequently once the change is registered
-        expect(fetchMock).toHaveBeenNthCalledWith(3, 'api/employees/Test Name', {method:"DELETE"});
+        expect(fetchMock).toHaveBeenNthCalledWith(3, 'api/employees/Test%20Name', {method:"DELETE"});//%20 is url encoding for a spacebar
 
     })
     it("Calls Submit:fetch(POST) correctly", async () => {
@@ -189,7 +189,7 @@ describe("API editing calls made correctly", () => {
         const submitElement = screen.getAllByText(/Submit/i)[1];
         await user.click(submitElement)
 
-        expect(fetchMock).toHaveBeenNthCalledWith(3, 'api/employees/Test Name', {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify({name:"Test Name222", value:100})});
+        expect(fetchMock).toHaveBeenNthCalledWith(3, 'api/employees/Test%20Name', {method:"PUT", headers:{"Content-Type":"application/json"}, body:JSON.stringify({name:"Test Name222", value:100})});
 
         expect(fetchMock).toHaveBeenCalledTimes(5);
     })
@@ -205,7 +205,7 @@ describe("API editing calls made correctly", () => {
         const incrementElement = screen.getByText(/Increment/i);
         await user.click(incrementElement)
 
-        expect(fetchMock).toHaveBeenNthCalledWith(3, 'api/employees', {method:"PATCH"});
+        expect(fetchMock).toHaveBeenNthCalledWith(3, 'api/list', {method:"PATCH"});
 
         expect(fetchMock).toHaveBeenCalledTimes(5);
     })
